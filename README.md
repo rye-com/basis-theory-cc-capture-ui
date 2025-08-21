@@ -67,3 +67,7 @@ export default tseslint.config([
   },
 ])
 ```
+
+npm create vite@latest cc-capture-example -- --template react
+cd cc-capture-example
+
