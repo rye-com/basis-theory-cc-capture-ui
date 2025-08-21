@@ -88,8 +88,7 @@ export default function App() {
         }}
       >
         <h1
-          className="text-lg font-semibold mb-4 text-gray-800"
-          style={{ color: "black" }}
+          style={{ color: "black"}}
         >
           Enter Payment Info
         </h1>
@@ -97,12 +96,11 @@ export default function App() {
         <BasisTheoryProvider bt={bt}>
           <div
             style={{
-              marginBottom: "2px",
+              backgroundColor: "white",
+              padding: "5px",
               border: "2px solid #ccc",
               borderRadius: "5px",
-              padding: "5px",
-              backgroundColor: "white",
-              marginTop: "20px",
+              marginBottom: "2px",
             }}
           >
             <CardNumberElement
