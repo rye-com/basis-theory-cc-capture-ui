@@ -1,73 +1,116 @@
-# React + TypeScript + Vite
+# Credit Card Capture Example
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application demonstrating secure credit card data capture using [Basis Theory React Elements](https://developers.basistheory.com/docs/sdks/web/react-elements). This example shows how to implement PCI-compliant credit card form fields that tokenize sensitive data without it touching your servers.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔒 **PCI Compliant**: Credit card data is tokenized client-side
+- 🎨 **Customizable Styling**: Fully customizable input field styles
+- 🚀 **React 19**: Built with the latest React features
+- ⚡ **Fast Development**: Built with Vite for rapid development
 
-## Expanding the ESLint configuration
+## Prerequisites
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- Node.js (version 18 or higher)
+- pnpm (recommended) or npm
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Getting Started
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### 1. Clone and Install
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-npm create vite@latest cc-capture-example -- --template react
+```bash
+# Clone the repository
+git clone <repository-url>
 cd cc-capture-example
 
+# Install dependencies
+pnpm install
+# or
+npm install
+```
+
+### 2. Configure Basis Theory
+
+1. Sign up for a [Basis Theory account](https://portal.basistheory.com/signup)
+2. Create a new application in the Basis Theory portal
+3. Copy your public API key
+4. Update the API key in `src/App.tsx`:
+
+```typescript
+const { bt } = useBasisTheory("public_key_provided_by_rye");
+```
+
+### 3. Run the Application
+
+```bash
+# Start development server
+pnpm dev
+# or
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+## Usage
+
+1. **Enter Credit Card Information**: Fill in the card number, expiration date, and CVC
+2. **Submit the Form**: Click the "Submit" button to tokenize the card data
+3. **View Results**: Check the browser console to see the generated token ID
+
+## How It Works
+
+This application demonstrates the secure capture of credit card data using Basis Theory's React Elements:
+
+- **CardNumberElement**: Captures and validates card numbers
+- **CardExpirationDateElement**: Handles expiration date input
+- **CardVerificationCodeElement**: Captures CVC/CVV codes
+
+When the form is submitted, the sensitive card data is tokenized client-side and a secure token is generated. This token can then be sent in the `/confim` step of the checkout-intents-api for processing payment with checkout.
+
+## Project Structure
+
+```
+cc-capture-example/
+├── src/
+│   ├── App.tsx          # Main application component
+│   ├── main.tsx         # Application entry point
+│   └── index.css        # Global styles
+├── public/              # Static assets
+├── package.json         # Dependencies and scripts
+└── README.md           # This file
+```
+
+## Available Scripts
+
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm lint` - Run ESLint
+
+## Dependencies
+
+- **@basis-theory/react-elements**: Basis Theory's React components for secure data capture
+- **React 19**: Latest version of React
+- **TypeScript**: Type safety and better development experience
+- **Vite**: Fast build tool and development server
+
+## Security Notes
+
+- This example uses a public API key which is safe to include in client-side code
+- Sensitive card data never touches your servers
+- All tokenization happens client-side using Basis Theory's secure elements
+- The generated tokens can be safely transmitted to Rye's api service
+
+## Next Steps
+
+To integrate this into your application:
+
+1. Replace the hardcoded API key with one provided by Rye.
+2. Implement backend processing for the generated tokens
+3. Add proper error handling and validation
+4. Customize the styling to match your brand
+5. Add additional form fields as needed
+
+## Learn More
+
+- [React Elements Guide](https://developers.basistheory.com/docs/sdks/web/react-elements)
