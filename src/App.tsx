@@ -31,7 +31,7 @@ const inputStyle = {
     // Style when input is empty
     color: "#c4c4c4",
   },
-}
+};
 
 export default function App() {
   const { bt } = useBasisTheory("key_test_us_pub_Gtquo4kCeDkj2hTFWJSYCX");
@@ -43,6 +43,8 @@ export default function App() {
 
   // stores the current card brand in state, to pass to CardVerificationCodeElement
   const [cardBrand, setCardBrand] = useState();
+  // tracks whether the form has been submitted
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const submit = async () => {
     try {
@@ -67,6 +69,7 @@ export default function App() {
       });
       // TODO post the intent object to your backend
       console.log("Token id: ", token?.id);
+      setIsSubmitted(true);
     } catch (error) {
       console.error(error);
     }
@@ -77,6 +80,7 @@ export default function App() {
       <div
         style={{
           maxWidth: "800px",
+          minWidth: "450px",
           margin: "50px auto",
           padding: "20px",
           justifyContent: "center",
@@ -87,71 +91,83 @@ export default function App() {
           border: "1px solid #ccc",
         }}
       >
-        <h1
-          style={{ color: "black"}}
-        >
-          Enter Payment Info
+        <h1 style={{ color: "black", textAlign: "center" }}>
+          {isSubmitted ? "Card Submitted!" : "Enter Payment Info"}
         </h1>
 
-        <BasisTheoryProvider bt={bt}>
+        {isSubmitted ? (
           <div
             style={{
-              backgroundColor: "white",
-              padding: "5px",
-              border: "2px solid #ccc",
-              borderRadius: "5px",
-              marginBottom: "2px",
+              textAlign: "center",
+              padding: "40px 20px",
+              fontSize: "48px",
+              color: "#4CAF50",
+              fontWeight: "600",
             }}
           >
-            <CardNumberElement
-              id="myCardNumber"
-              ref={cardNumberRef}
-              onChange={({ cardBrand }) => setCardBrand(cardBrand)}
-              style={inputStyle}
-            />
+            🔒
           </div>
-          <div style={{ display: "flex", marginBottom: "10px" }}>
+        ) : (
+          <BasisTheoryProvider bt={bt}>
             <div
               style={{
-                width: "100%",
+                backgroundColor: "white",
+                padding: "5px",
                 border: "2px solid #ccc",
-                marginRight: "1px",
                 borderRadius: "5px",
+                marginBottom: "2px",
               }}
             >
-              <CardExpirationDateElement
-                id="myCardExpiration"
-                ref={cardExpirationRef}
+              <CardNumberElement
+                id="myCardNumber"
+                ref={cardNumberRef}
+                onChange={({ cardBrand }) => setCardBrand(cardBrand)}
                 style={inputStyle}
               />
             </div>
-            <div
+            <div style={{ display: "flex", marginBottom: "10px" }}>
+              <div
+                style={{
+                  width: "100%",
+                  border: "2px solid #ccc",
+                  marginRight: "1px",
+                  borderRadius: "5px",
+                }}
+              >
+                <CardExpirationDateElement
+                  id="myCardExpiration"
+                  ref={cardExpirationRef}
+                  style={inputStyle}
+                />
+              </div>
+              <div
+                style={{
+                  width: "100%",
+                  border: "2px solid #ccc",
+                  marginLeft: "1px",
+                  borderRadius: "5px",
+                }}
+              >
+                <CardVerificationCodeElement
+                  id="myCardVerification"
+                  ref={cardVerificationRef}
+                  cardBrand={cardBrand}
+                  style={inputStyle}
+                />
+              </div>
+            </div>
+            <button
+              onClick={submit}
               style={{
-                width: "100%",
-                border: "2px solid #ccc",
-                marginLeft: "1px",
                 borderRadius: "5px",
+                backgroundColor: "#2348FC",
+                color: "white",
               }}
             >
-              <CardVerificationCodeElement
-                id="myCardVerification"
-                ref={cardVerificationRef}
-                cardBrand={cardBrand}
-                style={inputStyle}
-              />
-            </div>
-          </div>
-          <button
-            onClick={submit}
-            style={{
-              borderRadius: "5px",
-              backgroundColor: "#2348FC",
-              color: "white",
-            }}
-          >
-            Submit
-          </button>
-        </BasisTheoryProvider>
+              Submit
+            </button>
+          </BasisTheoryProvider>
+        )}
       </div>
     </>
   );
