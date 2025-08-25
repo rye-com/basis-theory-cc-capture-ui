@@ -67,7 +67,7 @@ export default function App() {
           cvc: cardVerificationRef.current,
         },
       });
-      // TODO post the intent object to your backend
+      // TODO send the token to Rye's api service for payment processing
       console.log("Token id: ", token?.id);
       setIsSubmitted(true);
     } catch (error) {
