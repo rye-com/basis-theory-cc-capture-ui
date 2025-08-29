@@ -2,6 +2,9 @@
 
 A React application demonstrating secure credit card data capture using [Basis Theory React Elements](https://developers.basistheory.com/docs/sdks/web/react-elements). This example shows how to implement PCI-compliant credit card form fields that tokenize sensitive data without it touching your servers.
 
+<img width="557" height="389" alt="image" src="https://github.com/user-attachments/assets/9b052c28-8f3f-4e50-baba-47df083e4b75" />
+
+
 ## Features
 
 - 🔒 **PCI Compliant**: Credit card data is tokenized client-side
