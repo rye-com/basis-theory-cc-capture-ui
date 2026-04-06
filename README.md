@@ -1,6 +1,6 @@
 # Credit Card Capture Example
 
-A React application demonstrating secure credit card data capture using [Basis Theory React Elements](https://developers.basistheory.com/docs/sdks/web/react-elements). This example shows how to implement PCI-compliant credit card form fields that tokenize sensitive data without it touching your servers.
+A Next.js application demonstrating secure credit card data capture using [Basis Theory React Elements](https://developers.basistheory.com/docs/sdks/web/react-elements). This example shows how to implement PCI-compliant credit card form fields that tokenize sensitive data without it touching your servers.
 
 <img width="557" height="389" alt="image" src="https://github.com/user-attachments/assets/9b052c28-8f3f-4e50-baba-47df083e4b75" />
 
@@ -9,8 +9,7 @@ A React application demonstrating secure credit card data capture using [Basis T
 
 - 🔒 **PCI Compliant**: Credit card data is tokenized client-side
 - 🎨 **Customizable Styling**: Fully customizable input field styles
-- 🚀 **React 19**: Built with the latest React features
-- ⚡ **Fast Development**: Built with Vite for rapid development
+- 🚀 **NextJS**: Built with the latest NextJS features
 
 ## Prerequisites
 
@@ -24,7 +23,7 @@ A React application demonstrating secure credit card data capture using [Basis T
 ```bash
 # Clone the repository
 git clone <repository-url>
-cd cc-capture-example
+cd basis-theory-cc-capture-ui
 
 # Install dependencies
 pnpm install
@@ -47,13 +46,13 @@ pnpm dev
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+The application will be available at `http://localhost:3000`
 
 ## Usage
 
 1. **Enter Credit Card Information**: Fill in the card number, expiration date, and CVC
 2. **Submit the Form**: Click the "Submit" button to tokenize the card data
-3. **View Results**: Check the browser console to see the generated token ID
+3. **View Results**: Token ID appears below the form
 
 ## How It Works
 
@@ -79,22 +78,27 @@ When the form is submitted, the sensitive card data is tokenized client-side and
 ## Project Structure
 
 ```
-cc-capture-example/
+basis-theory-cc-capture-ui/
 ├── src/
-│   ├── App.tsx          # Main application component
-│   ├── main.tsx         # Application entry point
-│   └── index.css        # Global styles
-├── public/              # Static assets
-├── package.json         # Dependencies and scripts
-└── README.md           # This file
+│   └── app/
+│       ├── layout.tsx          # Root layout
+│       ├── page.tsx            # Main page
+│       ├── CardTokenizer.tsx   # Card capture component
+│       ├── actions.ts          # Server actions
+│       └── globals.css         # Global styles
+├── public/                     # Static assets
+├── next.config.ts              # Next.js configuration
+├── package.json                # Dependencies and scripts
+└── README.md                   # This file
 ```
 
 ## Dependencies
 
 - **@basis-theory/react-elements**: Basis Theory's React components for secure data capture
+- **Next.js 16**: React framework with server-side rendering and server actions
 - **React 19**: Latest version of React
 - **TypeScript**: Type safety and better development experience
-- **Vite**: Fast build tool and development server
+- **Tailwind CSS 4**: Utility-first CSS framework
 
 ## Security Notes
 
