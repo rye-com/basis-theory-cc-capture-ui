@@ -6,12 +6,9 @@ import {
   CardElement,
   useBasisTheory,
 } from "@basis-theory/react-elements";
-import { createBasisTheorySession } from "./actions";
 
-const BT_API_KEY = "key_test_us_pub_Gtquo4kCeDkj2hTFWJSYCX";
-
-function CardForm() {
-  const { bt } = useBasisTheory(BT_API_KEY);
+function CardForm({ sessionKey, container }: { sessionKey: string; container: string }) {
+  const { bt } = useBasisTheory(sessionKey);
   const cardRef = useRef(null);
   const [status, setStatus] = useState("");
   const [loading, setLoading] = useState(false);
@@ -19,22 +16,16 @@ function CardForm() {
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
-      if (!bt || !cardRef.current) return;
+      if (!bt || !cardRef.current || !container) return;
 
       setLoading(true);
       setStatus("");
 
       try {
-        // 1. Create a scoped session on the server
-        const { sessionKey, container } = await createBasisTheorySession();
-
-        // 2. Tokenize the card using the session key and container
         const token = await bt.tokens.create({
           type: "card",
           data: cardRef.current,
           containers: [container],
-        }, {
-          apiKey: sessionKey,
         });
 
         setStatus(`Token created: ${token.id}`);
@@ -46,7 +37,7 @@ function CardForm() {
         setLoading(false);
       }
     },
-    [bt]
+    [bt, container]
   );
 
   return (
@@ -78,10 +69,10 @@ function CardForm() {
   );
 }
 
-export default function CardTokenizer() {
+export default function CardTokenizer({ sessionKey, container }: { sessionKey: string; container: string }) {
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-      <CardForm />
+      <CardForm sessionKey={sessionKey} container={container} />
     </div>
   );
 }
